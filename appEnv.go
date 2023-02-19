@@ -6,30 +6,30 @@ import (
 	"github.com/natepboat/go-app-env/internal"
 )
 
-type appEnv struct {
+type AppEnv struct {
 	activeEnv string
 	configDir string
 	config    map[string]interface{}
 }
 
-func (a appEnv) ActiveEnv() string {
+func (a *AppEnv) ActiveEnv() string {
 	return a.activeEnv
 }
 
-func (a appEnv) ConfigDir() string {
+func (a *AppEnv) ConfigDir() string {
 	return a.configDir
 }
 
-func (a appEnv) Config() map[string]interface{} {
+func (a *AppEnv) Config() map[string]interface{} {
 	return a.config
 }
 
-func NewAppEnv(fsys fs.FS) appEnv {
+func NewAppEnv(fsys fs.FS) *AppEnv {
 	processor := internal.NewProcessor(fsys)
 	activeEnv := processor.GetActiveEnv()
 	configDir := processor.GetConfigDir()
 
-	return appEnv{
+	return &AppEnv{
 		activeEnv: activeEnv,
 		configDir: configDir,
 		config:    processor.LoadConfig(activeEnv, configDir),
