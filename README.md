@@ -2,7 +2,6 @@
 
 Library to read JSON file and transform into flatten configuration map with ability to overwrite config by using specific environment file or environment variable.
 
----
 ## Active environment
 
 Active environment can configure from environment variable name `GO_APP_ACTIVE_ENV` or command line argument `--env`.
@@ -11,7 +10,6 @@ In case of found both environment variable and command line argument, AppEnv wil
 
 If both not provide, default active environment as `default`
 
----
 ## Config Directory
 
 Config directory can configure from environment variable name `GO_APP_CONFIG_DIR` or command line argument `--configDir`. 
