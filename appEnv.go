@@ -35,3 +35,15 @@ func NewAppEnv(fsys fs.FS) *AppEnv {
 		config:    processor.LoadConfig(activeEnv, configDir),
 	}
 }
+
+func ConfigOrDefault(appenv *AppEnv, key string, defaultValue interface{}) interface{} {
+	if appenv != nil {
+		val, exist := appenv.Config()[key]
+
+		if exist && val != nil {
+			return val
+		}
+	}
+
+	return defaultValue
+}
