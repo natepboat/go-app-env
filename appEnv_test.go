@@ -1,10 +1,13 @@
 package goappenv
 
 import (
+	"context"
 	"path"
+	"reflect"
 	"testing"
 	"testing/fstest"
 
+	"github.com/natepboat/go-app-env/contextKey"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -15,13 +18,16 @@ func TestNewAppEnv(t *testing.T) {
 		},
 	}
 
-	app := NewAppEnv(fsys)
+	ctx := context.Background()
+	app := NewAppEnv(fsys, ctx)
 
 	assert.Equal(t, "default", app.ActiveEnv())
 	assert.Equal(t, "./resources/", app.ConfigDir())
 	assert.Equal(t, "default", app.Config()["app.name"])
 	assert.EqualValues(t, 1, app.Config()["app.version"])
 	assert.Equal(t, "default-value", app.Config()["app.meta"])
+	assert.NotNil(t, app.context)
+	assert.Equal(t, reflect.Map, reflect.ValueOf(app.Context().Value(contextKey.AppCtxKey{})).Kind())
 }
 
 func TestEnvOrDefault(t *testing.T) {
@@ -35,7 +41,8 @@ func TestEnvOrDefault(t *testing.T) {
 				Data: []byte(`{"config":{"key-x":"key-x-val"}}`),
 			},
 		}
-		app := NewAppEnv(fsys)
+		ctx := context.Background()
+		app := NewAppEnv(fsys, ctx)
 
 		assert.Equal(t, "default value", ConfigOrDefault(app, "config.key", "default value"))
 	})
@@ -46,7 +53,8 @@ func TestEnvOrDefault(t *testing.T) {
 				Data: []byte(`{"config":{"key":"key-val"}}`),
 			},
 		}
-		app := NewAppEnv(fsys)
+		ctx := context.Background()
+		app := NewAppEnv(fsys, ctx)
 
 		assert.Equal(t, "key-val", ConfigOrDefault(app, "config.key", "default value"))
 	})
