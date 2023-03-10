@@ -47,7 +47,7 @@ func NewAppEnv(fsys fs.FS, ctx context.Context) *AppEnv {
 		activeEnv: activeEnv,
 		configDir: configDir,
 		config:    processor.LoadConfig(activeEnv, configDir),
-		context:   context.WithValue(ctx, contextKey.AppCtxKey{}, make(map[string]string, 0)),
+		context:   context.WithValue(ctx, contextKey.AppCtxKey{}, make(map[string]interface{}, 0)),
 	}
 }
 
