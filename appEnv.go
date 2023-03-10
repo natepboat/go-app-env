@@ -51,7 +51,7 @@ func NewAppEnv(fsys fs.FS, ctx context.Context) *AppEnv {
 	}
 }
 
-func ConfigOrDefault(appenv *AppEnv, key string, defaultValue interface{}) interface{} {
+func ConfigOrDefault(appenv IAppEnv, key string, defaultValue interface{}) interface{} {
 	if appenv != nil {
 		val, exist := appenv.Config()[key]
 
