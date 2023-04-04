@@ -5,6 +5,8 @@ import (
 	"io/fs"
 	"log"
 	"os"
+	"reflect"
+	"strconv"
 	"strings"
 )
 
@@ -58,8 +60,44 @@ func flatMap(m map[string]interface{}) map[string]interface{} {
 				out[k+"."+flatternedKey] = flatternedValue
 			}
 		default:
-			out[k] = v
+			kind := reflect.TypeOf(child).Kind()
+			if kind == reflect.Slice || kind == reflect.Array {
+				flatMapCollection(child, k, out)
+			} else {
+				out[k] = child
+			}
 		}
 	}
+	return out
+}
+
+func flatMapCollection(object interface{}, key string, out map[string]interface{}) {
+	arrVAlue := reflect.ValueOf(object)
+	for i := 0; i < arrVAlue.Len(); i++ {
+
+		indexString := strconv.Itoa(i)
+		flatItem := handleCollectionFlatmap(arrVAlue.Index(i).Interface(), key)
+		for flatternedKey, flatternedValue := range flatItem {
+			if len(flatternedKey) == 0 {
+				out[key+"."+indexString] = flatternedValue
+			} else {
+				out[key+"."+indexString+"."+flatternedKey] = flatternedValue
+			}
+		}
+	}
+}
+
+func handleCollectionFlatmap(item interface{}, key string) map[string]interface{} {
+	out := make(map[string]interface{})
+	switch i := item.(type) {
+	case map[string]interface{}:
+		flatChild := flatMap(i)
+		for flatternedKey, flatternedValue := range flatChild {
+			out[flatternedKey] = flatternedValue
+		}
+	default:
+		out[""] = item
+	}
+
 	return out
 }

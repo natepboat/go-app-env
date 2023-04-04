@@ -122,7 +122,8 @@ func TestFlatMap(t *testing.T) {
 		mockMap["first"] = lv1Obj
 		mockMap["meta"] = "meta-string"
 		mockMap["version"] = 789
-
+		mockMap["collection"] = [4]int{1, 2, 3, 4}
+		mockMap["collection-obj"] = [1]interface{}{lv1Obj}
 		flattedMap := flatMap(mockMap)
 
 		assert.Equal(t, "leaf-string", flattedMap["first.second.third.leafStr"])
@@ -132,6 +133,11 @@ func TestFlatMap(t *testing.T) {
 		assert.Equal(t, "1st-leaf", flattedMap["first.leaf"])
 		assert.Equal(t, "meta-string", flattedMap["meta"])
 		assert.Equal(t, 789, flattedMap["version"])
+		assert.Equal(t, 1, flattedMap["collection.0"])
+		assert.Equal(t, 2, flattedMap["collection.1"])
+		assert.Equal(t, 3, flattedMap["collection.2"])
+		assert.Equal(t, 4, flattedMap["collection.3"])
+		assert.Equal(t, "1st-leaf", flattedMap["collection-obj.0.leaf"])
 
 		_, unknownExist := flattedMap["first.second.third.unknown"]
 		assert.Equal(t, false, unknownExist)
