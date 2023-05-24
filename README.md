@@ -1,5 +1,7 @@
 # GO APP ENV
 
+[![ci](https://github.com/natepboat/go-app-env/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/natepboat/go-app-env/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/natepboat/go-app-env/branch/main/graph/badge.svg?token=46CLIT7FZF)](https://codecov.io/gh/natepboat/go-app-env)
 [![Go Report Card](https://goreportcard.com/badge/github.com/natepboat/go-app-env)](https://goreportcard.com/report/github.com/natepboat/go-app-env)
 [![GoDoc](https://pkg.go.dev/badge/github.com/natepboat/go-app-env)](https://pkg.go.dev/github.com/natepboat/go-app-env)
 
