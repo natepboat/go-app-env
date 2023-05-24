@@ -28,6 +28,10 @@ func TestNewAppEnv(t *testing.T) {
 	assert.Equal(t, "default-value", app.Config()["app.meta"])
 	assert.NotNil(t, app.context)
 	assert.Equal(t, reflect.Map, reflect.ValueOf(app.Context().Value(contextKey.AppCtxKey{})).Kind())
+
+	ctxMap := app.Context().Value(contextKey.AppCtxKey{}).(map[string]any)
+	ctxMap["example"] = 199
+	assert.Equal(t, 199, app.Context().Value(contextKey.AppCtxKey{}).(map[string]any)["example"])
 }
 
 func TestEnvOrDefault(t *testing.T) {

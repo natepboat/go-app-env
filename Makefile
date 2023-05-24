@@ -1,5 +1,5 @@
 format:
-	gofmt -w .
+	gofmt -w -s .
 test:
 	go test -v ./...
 coverage:
