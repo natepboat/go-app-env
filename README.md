@@ -1,5 +1,8 @@
 # GO APP ENV
 
+[![Go Report Card](https://goreportcard.com/badge/github.com/natepboat/go-app-env)](https://goreportcard.com/report/github.com/natepboat/go-app-env)
+[![GoDoc](https://pkg.go.dev/badge/github.com/natepboat/go-app-env)](https://pkg.go.dev/github.com/natepboat/go-app-env)
+
 Library to read JSON file and transform into flatten configuration map with ability to overwrite config by using specific environment file or environment variable.
 
 ## Active environment
